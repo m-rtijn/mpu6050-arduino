@@ -13,7 +13,7 @@
 
 class MPU6050 {
     public:
-        MPU6050(uint8_t address);
+        MPU6050(uint8_t new_address);
 
         // Configuration methods
         bool setAccelRange(uint8_t range);
@@ -45,7 +45,8 @@ class MPU6050 {
         const float GYRO_SCALE_MODIFIER_2000DEG = 16.4;
     private:
         // Constants
-        const float GRAVITY_MS2 = 9.80665
+        const float GRAVITY_MS2 = 9.80665;
+        uint8_t address;
 
         // Registers
         const uint8_t PWR_MGMT_1 = 0x6B;
@@ -74,4 +75,5 @@ class MPU6050 {
 
         // Internal methods
         int16_t read_i2c_word(uint8_t register_msb);
+        void write_i2c_byte(uint8_t i2c_register, uint8_t cmd);
 };

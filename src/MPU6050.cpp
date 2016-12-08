@@ -9,8 +9,8 @@
 #include "MPU6050.h"
 #include "Wire.h"
 
-MPU6050::MPU6050(uint8_t address) {
-    this.address = address;
+MPU6050::MPU6050(uint8_t new_address) {
+    address =nNew_address;
 
     // Wakeup the device
     Wire.begin();
@@ -20,8 +20,9 @@ MPU6050::MPU6050(uint8_t address) {
     Wire.endTransmission();
 }
 
-int16_t MPU6050::read_i2c_word(uint8_t register_msb) {
-    Wire.beginTransmission(this.address);
+/* Read a 16-bit signed value from the device by combining two following 1-byte registers*/ 
+private int16_t MPU6050::read_i2c_word(uint8_t register_msb) {
+    Wire.beginTransmission(address);
     Wire.write(register_msb);
     // Don't release the bus to be able to read multiple values in one go
     Wire.endTransmission(false);
@@ -36,4 +37,18 @@ int16_t MPU6050::read_i2c_word(uint8_t register_msb) {
     } else {
         return val;
     }
+}
+
+/* Write one byte to a specified register on the i2c device */
+private void write_i2c_byte(uint8_t i2c_register, uint8_t cmd) {
+    Wire.beginTransmission(address);
+    Wire.write(i2c_register);
+    Wire.write(cmd);
+    Wire.endTransmission();
+}
+
+/* Read raw temperature and calculate real temperature in degrees Celcius */
+public float readTemp() {
+    int16_t rawTemp = read_i2c_word(TEMP_OUT0);
+    return (rawTemp / 340) + 36.53;
 }
