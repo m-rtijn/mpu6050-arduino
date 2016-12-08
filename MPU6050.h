@@ -8,8 +8,8 @@
 #ifndef MPU6050_h
 #define MPU6050_h
 
+#include <Wire.h>
 #include "Arduino.h"
-#include "Wire.h"
 
 class MPU6050 {
     public:
@@ -77,3 +77,5 @@ class MPU6050 {
         int16_t read_i2c_word(uint8_t register_msb);
         void write_i2c_byte(uint8_t i2c_register, uint8_t cmd);
 };
+
+#endif

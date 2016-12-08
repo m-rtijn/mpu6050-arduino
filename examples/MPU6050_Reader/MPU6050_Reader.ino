@@ -5,15 +5,18 @@
  * Released under the MIT license.
  */
 
+#include <Wire.h>
 #include <MPU6050.h>
 
 MPU6050 mpu6050(0x68);
 
 void setup() {
     Serial.begin(9600);
+    Serial.println("Starting mpu6050 example...");
 }
 
 void loop() {
+    Serial.println("Temp: ");
     Serial.println(mpu6050.readTemp());
     delay(1000);
 }
