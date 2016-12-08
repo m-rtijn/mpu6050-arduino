@@ -1,6 +1,6 @@
 # mpu6050-arduino
 
-A library for using the MPU-6050 digital accelerometer and gyroscope using arduino-compatible devices.
+A library for using the MPU-6050 digital accelerometer and gyroscope using Arduino-compatible devices.
 
 # Usage
 
