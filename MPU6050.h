@@ -9,11 +9,15 @@
 #define MPU6050_h
 
 #include <Wire.h>
-#include "Arduino.h"
+#include <Arduino.h>
 
 class MPU6050 {
     public:
-        MPU6050(uint8_t new_address);
+        MPU6050(int address = 0x68);
+
+        // Control methods
+        bool wakeup();
+        bool sleep();
 
         // Configuration methods
         bool setAccelRange(uint8_t range);
@@ -46,7 +50,7 @@ class MPU6050 {
     private:
         // Constants
         const float GRAVITY_MS2 = 9.80665;
-        uint8_t address;
+        int _address;
 
         // Registers
         const uint8_t PWR_MGMT_1 = 0x6B;
@@ -75,6 +79,7 @@ class MPU6050 {
 
         // Internal methods
         int16_t read_i2c_word(uint8_t register_msb);
+        int8_t read_i2c_byte(uint8_t i2c_register);
         void write_i2c_byte(uint8_t i2c_register, uint8_t cmd);
 };
 

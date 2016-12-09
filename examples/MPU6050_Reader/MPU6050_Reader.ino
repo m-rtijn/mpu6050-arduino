@@ -6,17 +6,17 @@
  */
 
 #include <Wire.h>
+#include <Arduino.h>
 #include <MPU6050.h>
 
-MPU6050 mpu6050(0x68);
+MPU6050 mpu6050;
 
 void setup() {
+    mpu6050.wakeup();
     Serial.begin(9600);
     Serial.println("Starting mpu6050 example...");
+    Serial.println(mpu6050.readTemp());
 }
 
 void loop() {
-    Serial.println("Temp: ");
-    Serial.println(mpu6050.readTemp());
-    delay(1000);
 }

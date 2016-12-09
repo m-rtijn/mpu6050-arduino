@@ -5,28 +5,45 @@
  * Released under the MIT license.
  */
 
-#include "Arduino.h"
 #include "MPU6050.h"
-#include "Wire.h"
 
-MPU6050::MPU6050(uint8_t new_address) {
-    address = new_address;
-
-    // Wakeup the device
-    Wire.begin();
-    Wire.beginTransmission(address);
-    Wire.write(PWR_MGMT_1);
-    Wire.write(0);
-    Wire.endTransmission();
+MPU6050::MPU6050(int address) {
+    _address = address;
 }
 
-/* Read a 16-bit signed value from the device by combining two following 1-byte registers*/ 
+/* Resets the MPU-6050 to wake it up
+ * Checks for succes by reading the PWR_MGMT_1 register and returns accordingly
+ */
+bool MPU6050::wakeup() {
+    write_i2c_byte(PWR_MGMT_1, 0x00);
+
+    if (read_i2c_byte(PWR_MGMT_1) == 0x00) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/* Put the MPU-6050 into low power sleep mode
+ * Checks for succes by reading the PWR_MGMT_1 register and returns accordingly
+ */
+bool MPU6050::sleep() {
+    write_i2c_byte(PWR_MGMT_1, 0x20);
+
+    if (read_i2c_byte(PWR_MGMT_1) == 0x20) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+/* Read a 16-bit signed value from the device by combining two following 1-byte registers */
 int16_t MPU6050::read_i2c_word(uint8_t register_msb) {
-    Wire.beginTransmission(address);
+    Wire.beginTransmission(_address);
     Wire.write(register_msb);
     // Don't release the bus to be able to read multiple values in one go
     Wire.endTransmission(false);
-    Wire.requestFrom(address, 2, true);
+    Wire.requestFrom(_address, 2, true);
 
     int msb = Wire.read();
     int lsb = Wire.read();
@@ -39,9 +56,20 @@ int16_t MPU6050::read_i2c_word(uint8_t register_msb) {
     }
 }
 
+int8_t MPU6050::read_i2c_byte(uint8_t i2c_register) {
+    Wire.beginTransmission(_address);
+    Wire.write(i2c_register);
+    // Don't release the bus
+    Wire.endTransmission(false);
+    Wire.requestFrom(_address, 1, true);
+
+    int8_t val = Wire.read();
+    return val;
+}
+
 /* Write one byte to a specified register on the i2c device */
 void MPU6050::write_i2c_byte(uint8_t i2c_register, uint8_t cmd) {
-    Wire.beginTransmission(address);
+    Wire.beginTransmission(_address);
     Wire.write(i2c_register);
     Wire.write(cmd);
     Wire.endTransmission();
