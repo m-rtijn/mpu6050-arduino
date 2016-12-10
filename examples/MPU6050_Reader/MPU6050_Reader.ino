@@ -12,11 +12,32 @@
 MPU6050 mpu6050;
 
 void setup() {
-    mpu6050.wakeup();
     Serial.begin(9600);
+    if (mpu6050.wakeup()) {
+        Serial.println("wakeup succes");
+    } else {
+        Serial.println("wakeup failed");
+    }
     Serial.println("Starting mpu6050 example...");
     Serial.println(mpu6050.readTemp());
 }
 
 void loop() {
+    Serial.print("Accelerometer:");
+    Serial.print("\t");
+    Serial.print(mpu6050.readAccelX());
+    Serial.print("\t");
+    Serial.print(mpu6050.readAccelY());
+    Serial.print("\t");
+    Serial.print(mpu6050.readAccelZ());
+    Serial.println();
+    Serial.print("Gyroscope:");
+    Serial.print("\t");
+    Serial.print(mpu6050.readGyroX());
+    Serial.print("\t");
+    Serial.print(mpu6050.readGyroY());
+    Serial.print("\t");
+    Serial.print(mpu6050.readGyroZ());
+    Serial.println();
+    delay(1000);
 }

@@ -18,6 +18,7 @@ class MPU6050 {
         // Control methods
         bool wakeup();
         bool sleep();
+        void reset();
 
         // Configuration methods
         bool setAccelRange(uint8_t range);
@@ -47,7 +48,6 @@ class MPU6050 {
         const uint8_t GYRO_RANGE_500DEG = 0x08;
         const uint8_t GYRO_RANGE_1000DEG = 0x10;
         const uint8_t GYRO_RANGE_2000DEG = 0x18;
-
     private:
         // Constants
         const float GRAVITY_MS2 = 9.80665;
@@ -62,9 +62,11 @@ class MPU6050 {
         const uint8_t ACCEL_XOUT0 = 0x3B;
         const uint8_t ACCEL_YOUT0 = 0x3D;
         const uint8_t ACCEL_ZOUT0 = 0x3F;
+
         const uint8_t GYRO_XOUT0 = 0x43;
         const uint8_t GYRO_YOUT0 = 0x45;
         const uint8_t GYRO_ZOUT0 = 0x48;
+
         const uint8_t TEMP_OUT0 = 0x41;
 
         // Scale modifiers
