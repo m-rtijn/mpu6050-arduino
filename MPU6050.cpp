@@ -9,6 +9,7 @@
 
 MPU6050::MPU6050(int address) {
     _address = address;
+    Wire.begin();
 }
 
 /*
@@ -82,6 +83,13 @@ bool MPU6050::sleep() {
     } else {
         return false;
     }
+}
+
+/* Reset all used configuration registers */
+void MPU6050::reset() {
+    write_i2c_byte(ACCEL_CONFIG, 0x00);
+    write_i2c_byte(GYRO_CONFIG, 0x00);
+    write_i2c_byte(PWR_MGMT_1, 0x00);
 }
 
 /* Read raw temperature and calculate real temperature in degrees Celcius */
@@ -172,8 +180,38 @@ uint8_t MPU6050::getGyroRange() {
     return read_i2c_byte(GYRO_CONFIG);
 }
 
+/* Reads data from the gyroscope from the specified axis
+ * Returns -1 if an error occured
+ */
 float MPU6050::readGyroAxis(char axis) {
+    uint8_t i2c_register_msb = NULL;
+    if (axis == 'X') {
+        i2c_register_msb = GYRO_XOUT0;
+    } else if (axis == 'Y') {
+        i2c_register_msb = GYRO_YOUT0;
+    } else if (axis == 'Z') {
+        i2c_register_msb = GYRO_ZOUT0;
+    } else {
+        return -1;
+    }
 
+    float scale_modifier;
+    uint8_t range = getGyroRange();
+    if (range == GYRO_RANGE_250DEG) {
+        scale_modifier = GYRO_SCALE_MODIFIER_250DEG;
+    } else if (range == GYRO_RANGE_500DEG) {
+        scale_modifier = GYRO_SCALE_MODIFIER_500DEG;
+    } else if (range == GYRO_RANGE_1000DEG) {
+        scale_modifier = GYRO_SCALE_MODIFIER_1000DEG;
+    } else if (range == GYRO_RANGE_2000DEG) {
+        scale_modifier = GYRO_SCALE_MODIFIER_2000DEG;
+    } else {
+        scale_modifier = GYRO_SCALE_MODIFIER_250DEG;
+    }
+
+    int16_t raw_data = read_i2c_word(i2c_register_msb);
+    float value = (raw_data / scale_modifier) * GRAVITY_MS2;
+    return value;
 }
 
 float MPU6050::readGyroX() {

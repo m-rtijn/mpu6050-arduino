@@ -12,10 +12,17 @@
 MPU6050 mpu6050;
 
 void setup() {
-    mpu6050.wakeup();
     Serial.begin(9600);
+    if (mpu6050.wakeup()) {
+        Serial.println("wakeup succes");
+    } else {
+        Serial.println("wakeup failed");
+    }
     Serial.println("Starting mpu6050 example...");
     Serial.println(mpu6050.readTemp());
+    Serial.println(mpu6050.readAccelY());
+    Serial.println(mpu6050.readGyroX());
+    Serial.println(mpu6050.readGyroY());
 }
 
 void loop() {
