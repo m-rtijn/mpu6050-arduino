@@ -20,10 +20,24 @@ void setup() {
     }
     Serial.println("Starting mpu6050 example...");
     Serial.println(mpu6050.readTemp());
-    Serial.println(mpu6050.readAccelY());
-    Serial.println(mpu6050.readGyroX());
-    Serial.println(mpu6050.readGyroY());
 }
 
 void loop() {
+    Serial.print("Accelerometer:");
+    Serial.print("\t");
+    Serial.print(mpu6050.readAccelX());
+    Serial.print("\t");
+    Serial.print(mpu6050.readAccelY());
+    Serial.print("\t");
+    Serial.print(mpu6050.readAccelZ());
+    Serial.println();
+    Serial.print("Gyroscope:");
+    Serial.print("\t");
+    Serial.print(mpu6050.readGyroX());
+    Serial.print("\t");
+    Serial.print(mpu6050.readGyroY());
+    Serial.print("\t");
+    Serial.print(mpu6050.readGyroZ());
+    Serial.println();
+    delay(1000);
 }
