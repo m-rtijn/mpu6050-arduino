@@ -121,28 +121,36 @@ uint8_t MPU6050::getAccelRange() {
  */
 float MPU6050::readAccelAxis(char axis) {
     uint8_t i2c_register_msb = NULL;
-    if (axis == 'X') {
-        i2c_register_msb = ACCEL_XOUT0;
-    } else if (axis == 'Y') {
-        i2c_register_msb = ACCEL_YOUT0;
-    } else if (axis == 'Z') {
-        i2c_register_msb = ACCEL_ZOUT0;
-    } else {
-        return -1;
+    switch (axis) {
+        case 'X':
+            i2c_register_msb = ACCEL_XOUT0;
+            break;
+        case 'Y':
+            i2c_register_msb = ACCEL_YOUT0;
+            break;
+        case 'Z':
+            i2c_register_msb = ACCEL_ZOUT0;
+            break;
+        default:
+            return -1;
     }
 
     float scale_modifier;
     uint8_t range = getAccelRange();
-    if (range == ACCEL_RANGE_2G) {
-        scale_modifier = ACCEL_SCALE_MODIFIER_2G;
-    } else if (range == ACCEL_RANGE_4G) {
-        scale_modifier = ACCEL_SCALE_MODIFIER_4G;
-    } else if (range == ACCEL_RANGE_8G) {
-        scale_modifier = ACCEL_SCALE_MODIFIER_8G;
-    } else if (range == ACCEL_RANGE_16G) {
-        scale_modifier = ACCEL_SCALE_MODIFIER_16G;
-    } else {
-        scale_modifier = ACCEL_SCALE_MODIFIER_2G;
+    switch (range) {
+        case ACCEL_RANGE_2G:
+            scale_modifier = ACCEL_SCALE_MODIFIER_2G;
+            break;
+        case ACCEL_RANGE_4G:
+            scale_modifier = ACCEL_SCALE_MODIFIER_4G;
+            break;
+        case ACCEL_RANGE_8G:
+            scale_modifier = ACCEL_SCALE_MODIFIER_8G;
+            break;
+        case ACCEL_RANGE_16G:
+            scale_modifier = ACCEL_SCALE_MODIFIER_16G;
+        default:
+            return -1;
     }
 
     int16_t raw_data = read_i2c_word(i2c_register_msb);
@@ -185,28 +193,37 @@ uint8_t MPU6050::getGyroRange() {
  */
 float MPU6050::readGyroAxis(char axis) {
     uint8_t i2c_register_msb = NULL;
-    if (axis == 'X') {
-        i2c_register_msb = GYRO_XOUT0;
-    } else if (axis == 'Y') {
-        i2c_register_msb = GYRO_YOUT0;
-    } else if (axis == 'Z') {
-        i2c_register_msb = GYRO_ZOUT0;
-    } else {
-        return -1;
+    switch (axis) {
+        case 'X':
+            i2c_register_msb = GYRO_XOUT0;
+            break;
+        case 'Y':
+            i2c_register_msb = GYRO_YOUT0;
+            break;
+        case 'Z':
+            i2c_register_msb = GYRO_ZOUT0;
+            break;
+        default:
+            return -1;
     }
 
     float scale_modifier;
     uint8_t range = getGyroRange();
-    if (range == GYRO_RANGE_250DEG) {
-        scale_modifier = GYRO_SCALE_MODIFIER_250DEG;
-    } else if (range == GYRO_RANGE_500DEG) {
-        scale_modifier = GYRO_SCALE_MODIFIER_500DEG;
-    } else if (range == GYRO_RANGE_1000DEG) {
-        scale_modifier = GYRO_SCALE_MODIFIER_1000DEG;
-    } else if (range == GYRO_RANGE_2000DEG) {
-        scale_modifier = GYRO_SCALE_MODIFIER_2000DEG;
-    } else {
-        scale_modifier = GYRO_SCALE_MODIFIER_250DEG;
+    switch (range) {
+        case GYRO_RANGE_250DEG:
+            scale_modifier = GYRO_SCALE_MODIFIER_250DEG;
+            break;
+        case GYRO_RANGE_500DEG:
+            scale_modifier = GYRO_SCALE_MODIFIER_500DEG;
+            break;
+        case GYRO_RANGE_1000DEG:
+            scale_modifier = GYRO_SCALE_MODIFIER_1000DEG;
+            break;
+        case GYRO_RANGE_2000DEG:
+            scale_modifier = GYRO_SCALE_MODIFIER_2000DEG;
+            break;
+        default:
+            return -1;
     }
 
     int16_t raw_data = read_i2c_word(i2c_register_msb);

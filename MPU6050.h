@@ -39,15 +39,15 @@ class MPU6050 {
         uint8_t getGyroRange();
 
         // Ranges
-        const uint8_t ACCEL_RANGE_2G = 0x00;
-        const uint8_t ACCEL_RANGE_4G = 0x08;
-        const uint8_t ACCEL_RANGE_8G = 0x10;
-        const uint8_t ACCEL_RANGE_16G = 0x18;
+        static const uint8_t ACCEL_RANGE_2G = 0x00;
+        static const uint8_t ACCEL_RANGE_4G = 0x08;
+        static const uint8_t ACCEL_RANGE_8G = 0x10;
+        static const uint8_t ACCEL_RANGE_16G = 0x18;
 
-        const uint8_t GYRO_RANGE_250DEG = 0x00;
-        const uint8_t GYRO_RANGE_500DEG = 0x08;
-        const uint8_t GYRO_RANGE_1000DEG = 0x10;
-        const uint8_t GYRO_RANGE_2000DEG = 0x18;
+        static const uint8_t GYRO_RANGE_250DEG = 0x00;
+        static const uint8_t GYRO_RANGE_500DEG = 0x08;
+        static const uint8_t GYRO_RANGE_1000DEG = 0x10;
+        static const uint8_t GYRO_RANGE_2000DEG = 0x18;
     private:
         // Constants
         const float GRAVITY_MS2 = 9.80665;
