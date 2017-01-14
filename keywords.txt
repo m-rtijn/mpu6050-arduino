@@ -1,0 +1,15 @@
+MPU6050       KEYWORD1
+wakeup        KEYWORD2
+sleep         KEYWORD2
+reset         KEYWORD2
+setAccelRange KEYWORD2
+setGyroRange  KEYWORD2
+readTemp      KEYWORD2
+readAccelX    KEYWORD2
+readAccelY    KEYWORD2
+readAccelZ    KEYWORD2
+readGyroX     KEYWORD2
+readGyroY     KEYWORD2
+readGyroZ     KEYWORD2
+getAccelRange KEYWORD2
+getGyroRange  KEYWORD2
